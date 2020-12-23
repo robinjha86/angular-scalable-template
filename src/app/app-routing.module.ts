@@ -6,10 +6,12 @@ import {
 export const routes: Routes = [
   {
     path: 'auth',
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     loadChildren: () => import('./ast-auth/ast-auth.module').then(m => m.AstAuthModule)
   },
   {
     path: 'pages',
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     loadChildren: () => import('./pages').then(m => m.PagesModule),
     canActivate: []
   },

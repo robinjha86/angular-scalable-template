@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,18 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './ast-login.component.html',
   styleUrls: ['./ast-login.component.scss']
 })
-export class AstLoginComponent implements OnInit {
+export class AstLoginComponent {
 
 
   constructor(private router: Router) {
 
 
   }
-
-  login() {
-
-  }
-  ngOnInit() {
-  }
-
 }

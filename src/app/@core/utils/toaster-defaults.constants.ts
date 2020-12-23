@@ -1,5 +1,5 @@
 
-import { GlobalConfig, Toast } from 'ngx-toastr';
+import { GlobalConfig } from 'ngx-toastr';
 
 export const toasterDefaults: GlobalConfig = {
   maxOpened: 0,

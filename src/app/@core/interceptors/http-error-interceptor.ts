@@ -12,12 +12,14 @@ import { HttpErrorHandlerService } from '../utils/http-error-handler.service';
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private errorHandler: HttpErrorHandlerService) { }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(
         (event) => {
           if (event instanceof HttpResponse) {
             if (event.body && typeof event.body === 'object'
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               && (event.body.error || event.body.errorCode || event.body.warning)) {
               return this.errorHandler.handleCustomServerError(event);
             }

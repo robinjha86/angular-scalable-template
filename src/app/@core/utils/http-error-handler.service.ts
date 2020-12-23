@@ -5,7 +5,7 @@ import { appApiResources } from '@shared/constants/api-resources.constant';
 import { astConstants } from '@shared/constants/ast.constant';
 import { HelperService } from '@shared/services/helper.service';
 import { ServerResponse } from '@shared/typings/server-response.interface';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import {
     ParsedCustomServerError
 } from '../parsed-custom-server-error.interface';
@@ -25,7 +25,7 @@ export class HttpErrorHandlerService {
    * @returns
    * @memberof ErrorHandlerService
    */
-  handleErrorResponse(error: HttpErrorResponse) {
+  handleErrorResponse(error: HttpErrorResponse): Observable<never> {
     const parsedError = this.tryParseError(error.error);
     if (!this.isErrorForAuth(error)) {
       this.showToast(parsedError);
@@ -48,7 +48,7 @@ export class HttpErrorHandlerService {
    * @returns
    * @memberof HttpErrorHandlerService
    */
-  handleCustomServerError(errorRes: HttpResponse<ServerResponse>) {
+  handleCustomServerError(errorRes: HttpResponse<ServerResponse>): HttpResponse<ServerResponse> | Observable<never> {
     const error = errorRes.body;
 
     const parsedCustomServerError = this.parseCustomServerError(error);
@@ -99,8 +99,10 @@ export class HttpErrorHandlerService {
   });
 
   private showToast(parsedError: ParsedCustomServerError): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const title = parsedError.error || parsedError.warning || astConstants.defaultServerError.error;
     if (parsedError.message !== 'Unknown error occurred! Please try again.') {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const message = parsedError.message;
       // parsedError.warning ? this.toast.onWarning(title, message) : this.toast.onError(title, message);
     }

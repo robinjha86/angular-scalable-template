@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { appApiResources } from '@shared/constants';
 import { HelperService } from '@shared/services';
-import { ParsedClientErrorStack, User } from '@shared/typings';
+import { User } from '@shared/typings';
 import * as StackTraceParser from 'error-stack-parser';
 import * as moment from 'moment';
 // import * as StackTraceGPS from 'stacktrace-gps';
@@ -16,7 +16,7 @@ import { ParsedError } from '../interceptors/parsed-error.interface';
 @Injectable()
 export class ErrorLoggerService {
   constructor(private injector: Injector, private http: HttpClient) { }
-  async log(error: Error) {
+  async log(error: Error): Promise<ParsedError> {
     // const parsedStackInfo = await this.parseErrorStack(error);
     const parsedError = this.addContextInfo(error);
 
@@ -24,11 +24,11 @@ export class ErrorLoggerService {
 
     if (appApiResources.logError) {
       // Send error to server
-      await this.http.post(appApiResources.logError, parsedError).toPromise();
+      await this.http.post<ParsedError>(appApiResources.logError, parsedError).toPromise();
       return parsedError;
     } else {
       // API to log error not available
-      await new Promise((resolve, reject) => {
+      await new Promise<ParsedError>((resolve) => {
         setTimeout(() => {
           resolve(parsedError);
         }, 0);
@@ -44,9 +44,9 @@ export class ErrorLoggerService {
     const userLs: string | null = localStorage.getItem('user');
     let user: User = {};
     if (userLs) {
-      user = JSON.parse(userLs);
+      user = JSON.parse(userLs) as User;
     }
-    const { id, email, name } = user || { id: null, email: null, name: null };
+    const { id, email, name } = user || { id: '', email: '', name: '' };
     const time: string = moment.utc().toISOString();
 
     const router = this.injector.get(Router as Type<Router>);

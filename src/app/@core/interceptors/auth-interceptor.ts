@@ -11,14 +11,15 @@ import { finalize, tap } from 'rxjs/operators';
 /** Pass untouched request through to the next request handler. */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() { }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let successResponse: HttpResponse<any>;
     let errorResponse: HttpErrorResponse;
     const isRequestToAuthAPI = !!(includes(req.url, '/login') || includes(req.url, '/register'));
     const tokenLs = localStorage.getItem('token');
     const addTokenToReq = !isRequestToAuthAPI && !!tokenLs;
-    const token = addTokenToReq ? localStorage.getItem('token') : '';
+    const token = addTokenToReq ? localStorage.getItem('token') ?? '' : '';
     const headers: HttpHeaders = addTokenToReq ? req.headers.set('Authorization', `Bearer ${token}`) : req.headers;
     const reqUpdate = addTokenToReq ? { headers } : {};
 
@@ -28,6 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // Succeeds when there is a response; ignore other events
         (event) => {
           if (event instanceof HttpResponse) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             successResponse = event;
           }
         },

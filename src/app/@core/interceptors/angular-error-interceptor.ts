@@ -13,17 +13,14 @@ export class AngularErrorInterceptor implements ErrorHandler {
     private injector: Injector,
   ) { }
 
-  handleError(error: Error | HttpErrorResponse) {
+  handleError(error: Error | HttpErrorResponse): void {
     if (error instanceof HttpErrorResponse) {
       // do nothing as we are handling http errors in http interceptor
-      return new Promise((resolve, reject) => {
-        resolve(true);
-      }).then(res => true);
     } else {
       // Handle Client Error (Angular Error, ReferenceError...)
       const errorsService = this.injector.get(ErrorLoggerService as Type<ErrorLoggerService>);
 
-      return errorsService.log(error).then((errorWithContextInfo) => this.showToast(astConstants.defaultJavaScriptError));
+      void errorsService.log(error).then(() => this.showToast(astConstants.defaultJavaScriptError));
     }
   }
 

@@ -10,5 +10,5 @@ export const appApiResources = {
   login: createAuthUrl('token'),
   register: createAuthUrl('register'),
   getProfile: createUrl('profile'),
-  logError: createUrl('error-log'),
+  logError: '',
 };
