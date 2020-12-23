@@ -1,0 +1,47 @@
+{
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.quoteStyle": "single",
+    "turboConsoleLog.quote": "'",
+    "prettier.singleQuote": true,
+    "editor.formatOnSave": true,
+    "cSpell.words": [
+       
+    ],
+    "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 80,
+    "importSorter.sortConfiguration.customOrderingRules.rules": [
+        {
+            "type": "importMember",
+            "regex": "^$",
+            "orderLevel": 5,
+            "disableSort": true
+        },
+        {
+            "regex": "^@angular/(.*)$",
+            "orderLevel": 10
+        },
+        { 
+            "orderLevel": 20
+        },
+        {
+            "regex": "^[^.@]",
+            "orderLevel": 25
+        },
+        {
+            "regex": "^@core/(.*)$",
+            "orderLevel": 30
+        },
+        {
+            "regex": "^@shared/(.*)$",
+            "orderLevel": 35
+        },
+        {
+            "regex": "^[@]",
+            "orderLevel": 40
+        },
+        {
+            "regex": "^[.]",
+            "orderLevel": 45
+        }
+    ],
+    "importSorter.generalConfiguration.sortOnBeforeSave": true
+}
