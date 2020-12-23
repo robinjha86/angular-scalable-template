@@ -5,7 +5,7 @@
     "prettier.singleQuote": true,
     "editor.formatOnSave": true,
     "cSpell.words": [
-       
+        "Toastr"
     ],
     "importSorter.importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 80,
     "importSorter.sortConfiguration.customOrderingRules.rules": [
