@@ -11,7 +11,6 @@ export class AppComponent {
    *
    */
   constructor() {
-    throw new Error("error occured");
 
 
   }
